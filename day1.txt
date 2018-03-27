@@ -1,0 +1,167 @@
+Spring Cloud
+IAAS - ex. AWS, Cloud Foundry, Digital Ocean
+SAAS - ex. outlook
+PAAS - Imagine, devt env
+
+*create acct:
+hub.docker.com
+cloud foundry
+
+docker - packaging
+spring boot - set of api
+
+spring boot --> spring cloud (cloud apis)
+
+1. spring cloud 
+	- spring boot + netflix (3rd party api comp ex Eureka, Hystrix, Zull, Fe)
+2. SOA - JAX-WS
+UDDI in the middle (contract such as method avai)
+Producer and Consumer
+all comp in a single class (compile)
+has ESB (single point of failure)
+Monolithic
+
+3. Microservices (new lang come ex GO and SCALA)
+- SOA + 1
+- can switch to any language
+- compile only service affected - more granular
+- decentralized DB
+- each services in each own container
+- JSON + REST + Cloud Bus
+
+
+Spring Built-In Microsvcs:
+4. Eureka - discovery service (Netflix)
+
+5. Ribbon - Load Bal (Netflix)
+
+6. Zuul - gateway/mapping single entry point, implement security, pass hardcoded values (Netflix)
+
+
+Cloud Native Arch:
+a. DEVOPS
+b. Cont Integ and Dev ex Jenkins
+c. Agile
+d. Microsvcs
+
+Issues: supportability, more xpensive to buy monitoring tools, need support for more dev w prog knowledge
+	more network calls
+
+
+7. Breaking Monolithic to Microsvcs
+	based on func
+	-login
+	-report
+    a. Write from scratch based on design patterns (pickup by module) - time constraint
+    b. Determine dependency (graphical chart report)- JDepenpendecy  - tool to determine dependency, start fr loosely to tightly coupled
+
+	Note:
+	bootstrap prop - exec before app.prop
+
+*Weigh Adv vs DisAd:
+Achieve loosely coupled
+Shifting to another lang is easy- dependency on developer on certain lang.
+
+
+8. IMPL
+	a. pom.xml - spring cloud, ex. Camden.SR6,DALTON SR4, FRINGE, EUGERA (cloud repo dep mgmt - match w spring starter & dep )
+	
+	a1. create eureka server project from spring io
+		eureka.instance.hostname:localhost
+		server.port:1784
+		Notes:
+			spring-boot:run
+			192.168.99.105
+	a.2 create eureka producer - rest service or a microservice
+		this will be reflected on the eureka server
+		access manually --> http://localhost:8632/account
+
+	a.3 create microservice consumer - Bank Consumer
+		at first comment the load balancing and use via [Discovery Client]
+	
+	[DEPLOY TO CLOUD] via CLI
+	a.4 create a simple rest service to be deployed to cloud
+		sign up for pivotal, every cloud tool uses CLI ex Pivotal CLI
+		https:cli.run.pivotal.io/stable?release=windows64&source=github
+
+cf login or logout
+cf login -a api.run.pivotal.io (create space) --> create new org in website
+	rcv a code in cp - created spp.org
+  cf target -o spp.org -s sppspace (use the created org, deve is the name of the space)
+
+cd (to target folder and then) - [use cmd run as admin], 
+cf buildpacks (show the build packs)
+cf push -p SpringBootCloudFoundry_Demo10-0.0.1-SNAPSHOT.jar sppdemo --random-route
+
+To delete:
+cf delete SpringBootCloudFoundry_Demo10-0.0.1-SNAPSHOT.jar -r -f
+
+https://sppdemo-zany-antelope.cfapps.io/demo?name=tyty
+
+
+	[RIBBON] dependency spring starter cloud ribbon
+	a.5 load balancing is on Client side
+		Ribbon will forward --> to create 3 bank producer instance (via diff ports)
+				    --> stop 1 of the hello + call to producer instances
+		Access via bowser:
+		Refer to BankProducer_MicroServices-Demo11(3 instances) - access via browser, stop 1 instance
+	
+	[HYSTERIX] exception will go to Fallback, add in pom!
+	a.6 Hysterix (fallback and circuit breaker)
+		ex. BankController. java - callback method
+
+	a.7 Circuit Breaker(add in pom.xml)
+		
+https://hub.docker.com/ 
+spatenia@gmail.com S1
+
+
+	[Actuator] Spring Cloud Config Server Microservice
+	a. client will execute /refresh or /info or /health
+		GIT  ---> Spring Cloud Config 	---> Client1, Client2
+		- Naming convention: client app name + profile
+		- Define the GIT url	
+	
+	Note: dependencyManagement 
+	- downloads spring cloud library ex for eureka
+	- needs to be compatible or match with spring boot version
+
+	Ref Project: ConfigServer-Applicaiton-Demo14 and ConfigServerClient-Applicaiton-Demo14
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
